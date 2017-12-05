@@ -8,7 +8,7 @@
     "dist",
     "immutable.js"
   ],
-  "npmName": "@bandwidth/redux-facet-alerts",
+  "npmName": "@bandwidth/redux-facet-filters",
   "npmFileMap": [
     {
       "basePath": "/dist/",
