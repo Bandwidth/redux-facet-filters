@@ -154,7 +154,7 @@ The parameters are the same as the required parameters for `withFilteredData`. `
 
 The factory will return an object with facet selector creators. The selector creators provided are:
 
-* `createFilteredDataSelector(facetName)`: creates a selector which computes a filtered data set from the data you selected from the store with `itemsSelector`.
+* `createFilteredDataSelector(facetName: String)`: creates a selector which computes a filtered data set from the data you selected from the store with `itemsSelector`.
 
 #### Example usage
 
@@ -170,3 +170,32 @@ const FacetContainer = facet(
   }),
 )(ViewComponent);
 ```
+
+### `filterSelectors`
+
+`redux-facet-filters` ships with a few selector creators and selector creator creators (think of these as "higher order selector creators") which can be used to manually retrieve filter state information for your facet.
+
+* `filterSelectors.createFilterListSelector(facetName: String)`: when called with a facet name, this creates a selector which will return the list of filters.
+* `filterSelectors.createFilterSelectorCreator(index: Number)`: when called with an index, this function creates a facet selector creator which will select the filter at the specified index. The returned function can be used like `filterSelectorCreator(facetName: String)`, similarly to `createFilterListSelector`. It returns a selector which can be used against the Redux state.
+
+#### Examples
+
+```js
+const filterListSelector = createFilterListSelector('users');
+filterListSelector(state);
+/*
+  [
+    { type: 'usernameContains', value: 'foo' },
+    { type: 'emailContains', value: '@gmail' },
+    { type: 'createdBefore', value: '2017/12/1' },
+  ]
+*/
+
+const createFilterSelector = createFilterSelectorCreator(2);
+const selectFilter = createFilterSelector('users');
+selectFilter(state);
+/*
+  { type: 'createdBefore', value: '2017/12/1' }
+*/
+```
+
