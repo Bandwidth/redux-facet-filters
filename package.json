@@ -1,5 +1,5 @@
 {
-  "name": "redux-facet-filters",
+  "name": "@bandwidth/redux-facet-filters",
   "version": "0.3.0",
   "description": "Filter plugin for redux-facet",
   "main": "./dist/index.js",
