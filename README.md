@@ -10,7 +10,7 @@ To use `redux-facet-filters` with `immutable`, import all modules from `@bandwid
 
 ## Documentation
 
-### Default export: `withFilteredData(selectItems: Function, filterReducer: Function, options: Object)`
+### Default export: `withFilteredData(selectItems: Function|String, filterReducer: Function, options: Object)`
 
 A higher-order-component which enhances a `facet` container with:
 
@@ -19,7 +19,9 @@ A higher-order-component which enhances a `facet` container with:
 
 Two parameters are required to use `withFilteredData`:
 
-1. `selectItems`: a selector function to retrieve your raw data to be filtered. This function should take the Redux state as a parameter and return your data in whatever format you want. `redux-facet-filters` does not enforce a required shape for raw data.
+1. `selectItems`:
+  * If a function is provided: a selector function to retrieve your raw data to be filtered. This function should take the Redux state as a parameter and return your data in whatever format you want. `redux-facet-filters` does not enforce a required shape for raw data.
+  * If a string is provided: a prop name which will be passed to the container which must provided raw data to be filtered. The container will apply the filter reducer to this data.
 2. `filterReducer`: similar to Redux' reducer function, this function will be called successively with each filter in order. The first parameter will always be your data set, and the second parameter will be a filter. Return a new copy of your data set with the filter applied.
 
 The third parameter is `options`:

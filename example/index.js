@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 
 import ShapesList from './containers/ShapesList';
+import PropProvidedShapesList from './containers/PropProvidedShapesList';
 
 const store = configureStore();
 
@@ -18,6 +19,10 @@ ReactDom.render(
         a lot of Redux boilerplate code.
       </p>
       <ShapesList />
+      <p>
+        Below is an alternative library usage. Instead of selecting the data from Redux, we pass a prop name to the higher-order-component, and it uses the data passed to that prop.
+      </p>
+      <PropProvidedShapesList />
     </div>
   </Provider>,
   document.getElementById('main'),

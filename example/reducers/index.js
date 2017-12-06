@@ -23,6 +23,9 @@ export default combineReducers({
     shapesList: combineReducers({
       [filterReducer.key]: filterReducer,
     }),
+    propProvidedShapesList: combineReducers({
+      [filterReducer.key]: filterReducer,
+    }),
   }),
 
   // our 'traditional' redux data reducers

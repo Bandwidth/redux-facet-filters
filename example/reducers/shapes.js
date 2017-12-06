@@ -1,7 +1,5 @@
-const COLORS = ['orange', 'blue', 'yellow'];
-const DEMO_DATA = Array(50).fill(0).map(() => ({
-  number: Math.floor(Math.random() * 100),
-  color: COLORS[Math.floor(Math.random() * 3)]
-}));
+import generateShapes from '../utils/generateShapes';
+
+const DEMO_DATA = generateShapes();
 
 export default () => DEMO_DATA;
