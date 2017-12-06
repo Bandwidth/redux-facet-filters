@@ -102,6 +102,12 @@ A component enhanced with `withFilteredData` will receive the following props:
 * `clearFilters()`
   * Clears all filters in the list.
 
+### `withFilters()`
+
+A smaller higher-order-component that only provides filter props, and does not compute filtered data. A facet component composed with `withFilters` will provide `filters`, `addFilter`, `updateFilter`, `insertFilter`, `removeFilter` and `clearFilters`.
+
+This smaller component may be useful if you want to create a container scoped only to your filter controls.
+
 ### `filterReducer`
 
 Include this reducer within your facet reducers to track filtering state.

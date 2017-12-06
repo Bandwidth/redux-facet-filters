@@ -3,3 +3,4 @@ export { default as filterReducer } from './immutable/reducer';
 export { default as filterSelectors } from './immutable/selectors';
 export { default } from './immutable/withFilteredData';
 export { default as filterActions } from './actions';
+export { default as withFilters } from './immutable/withFilters';
