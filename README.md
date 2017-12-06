@@ -1,12 +1,24 @@
 # redux-facet-filters
 
-Filtering tools for [`redux-facet`](https://github.com/bandwidth/redux-facet). Filter collections of resources in your application without writing and re-writing Redux boilerplate code.
+Filtering and sorting tools for [`redux-facet`](https://github.com/bandwidth/redux-facet). Filter or rearrange multiple collections of resources in your application without writing and re-writing Redux boilerplate code.
 
 [Check out a simple example here](http://dev.bandwidth.com/redux-facet-filters/). The source is located in [/example](https://github.com/Bandwidth/redux-facet-filters/tree/master/example).
 
 ## Immutable.js Support
 
 To use `redux-facet-filters` with `immutable`, import all modules from `@bandwidth/redux-facet-filters/immutable`. Module names and usages stay the same.
+
+## What can you do with it?
+
+* Apply filters to data selected from your store to specific views in your application without writing boilerplate Redux actions, reducers and sagas to track filter state.
+* Add, remove, replace, and reorder filters simply by connecting your component to the provided container.
+* Go beyond filtering-- use the filter pipeline to sort your data, as well.
+
+## Will this alter the data in my store?
+
+Nope!
+
+`redux-facet-filters` (and `redux-facet` in general) is built on the principle of computing as much data as we can from a minimal Redux store. To use this library effectively, you should have a global and canonical data set which you maintain in your store. The purpose of this library is to consume that data set, run it through your provided filters, and supply a computed view of the data to your components.
 
 ## Documentation
 
@@ -54,11 +66,25 @@ const filterReducer = (items, filter) => {
   switch (filter.type) {
     case 'nameIncludes':
       return items.filter(item => item.name.includes(filter.value));
+    default:
+      return items;
   }
 }
 ```
 
-Or you can use plain string values, or complex nested objects. It's up to you, and your filtering needs.
+Filters aren't limited to reducing the data set. You could also use a filter to sort your data:
+
+```js
+const filterReducer = (items, filter) => {
+  switch (filter.type) {
+    case 'sortBy':
+      // the value of this filter deterimines the key we should compare
+      return items.sort((a, b) => a[filter.value].localeCompare(b[filter.value]));
+    default:
+      return items;
+  }
+}
+```
 
 #### Using `withFilteredData()`
 
@@ -87,7 +113,7 @@ Remember, `withFilteredData` must come *after* `facet`.
 
 A component enhanced with `withFilteredData` will receive the following props:
 
-* `[filteredData | dataPropName]`
+* `filteredData | [dataPropName]`
   * The filtered dataset will be supplied to a prop name you can define yourself. By default, this prop will be `filteredData`.
 * `filters`
   * An array of filter objects. `redux-facet-filters` does not enforce any shape on filters. They can contain any data you need to power your filtering logic.
