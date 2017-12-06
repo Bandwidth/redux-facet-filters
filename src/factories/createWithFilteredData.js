@@ -13,20 +13,19 @@ export default (selectors, createSelectors) => (selectItems, filterReducer, opti
     throw new Error('selectItems must be supplied to withFilteredData');
   }
 
-  const { createFilteredListSelector } = createSelectors(selectItems, filterReducer);
+  const { createFilteredDataSelector } = createSelectors(selectItems, filterReducer);
 
   const mapStateToProps = (state, ownProps) => ({
     filters: selectors.createFilterListSelector(ownProps.facetName)(state),
-    [defaultedOptions.dataPropName]: createFilteredListSelector(ownProps.facetName)(state),
+    [defaultedOptions.dataPropName]: createFilteredDataSelector(ownProps.facetName)(state),
   });
 
   const mapDispatchToProps = (dispatch, ownProps) => {
-    const setFilter = (filter) => ownProps.facetDispatch(actions.setFilter(filter));
     return {
-      setFilter,
-      addFilter: setFilter,
-      updateFilter: setFilter,
-      removeFilter: (id) => ownProps.facetDispatch(actions.removeFilter(id)),
+      addFilter: (filter) => ownProps.facetDispatch(actions.addFilter(filter)),
+      updateFilter: (index, filter) => ownProps.facetDispatch(actions.updateFilter(index, filter)),
+      insertFilter: (index, filter) => ownProps.facetDispatch(actions.insertFilter(index, filter)),
+      removeFilter: (index) => ownProps.facetDispatch(actions.removeFilter(index)),
       clearFilters: () => ownProps.facetDispatch(actions.clearFilters()),
     };
   };

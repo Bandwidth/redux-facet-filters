@@ -2,23 +2,17 @@ import { createSelector } from 'reselect';
 import { selectors } from '@bandwidth/redux-facet/immutable';
 import { REDUCER_KEY } from '../constants';
 
-const createFilterCollectionSelector = facetName => createSelector(
-  selectors.createFacetStateSelector(facetName),
-  facetState => facetState[REDUCER_KEY],
-);
-
 const createFilterListSelector = facetName => createSelector(
-  createFilterCollectionSelector(facetName),
-  filters => Object.values(filters).sort((a, b) => a.id.localeCompare(b.id)),
+  selectors.createFacetStateSelector(facetName),
+  filters => facetState[REDUCER_KEY],
 );
 
-const createFilterSelectorCreator = filterId => facetName => createSelector(
+const createFilterSelectorCreator = index => facetName => createSelector(
   createFilterCollectionSelector(facetName),
-  filters => filters[filterId],
+  filters => filters[index],
 );
 
 export default {
-  createFilterCollectionSelector,
   createFilterListSelector,
   createFilterSelectorCreator,
 };

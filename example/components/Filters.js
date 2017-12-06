@@ -7,12 +7,12 @@ export default ({ filters, addFilter, removeFilter, clearFilters }) => (
     <b>Filters</b>
     <ul style={{ flex: '0 0 auto', border: '1px solid black', padding: '8px' }}>
       {filters.map(
-        filter => (
+        (filter, index) => (
           <Filter
-            key={filter.id}
+            key={`${filter.type}:${filter.value}`}
             type={filter.type}
             value={filter.value}
-            onRemove={() => removeFilter(filter.id)}
+            onRemove={() => removeFilter(index)}
           />
         )
       )}

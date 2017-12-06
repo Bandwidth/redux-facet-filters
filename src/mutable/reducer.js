@@ -4,15 +4,19 @@ import { REDUCER_KEY } from '../constants';
 import { handleActions } from 'redux-actions';
 import createMount from './createMount';
 
-const DEFAULT_STATE = {};
+const DEFAULT_STATE = [];
 
 const reducer = handleActions({
-  [actions.setFilter]: (state, { payload: { filter } }) => ({
+  [actions.addFilter]: (state, { payload: { filter } }) => [
     ...state,
-    [filter.id]: filter
-  }),
-  [actions.removeFilter]: (state, { payload: { id } }) => state
-    .filter(filter => filter.id !== id),
+    filter
+  ],
+  [actions.updateFilter]: (state, { payload: { index, filter } }) => state
+    .splice(index, 1, filter),
+  [actions.insertFilter]: (state, { payload: { index, filter } }) => state
+    .splice(index, 0, filter),
+  [actions.removeFilter]: (state, { payload: { index } }) => state
+    .splice(index, 1),
   [actions.clearFilters]: () => DEFAULT_STATE,
 }, DEFAULT_STATE);
 
