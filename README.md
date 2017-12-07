@@ -41,12 +41,10 @@ The third parameter is `options`:
 ```js
 {
   dataPropName: String = 'filteredData',
-  connect: Function = connect, /* from react-redux */
-  ...connectOptions /* any options you would normally pass to react-redux connect */
 }
 ```
 
-Options lets you define the prop name you want to be used to provide your filtered data to the wrapped component. It defaults to `filteredData`.
+`dataPropName` lets you define the prop name you want to be used to provide your filtered data to the wrapped component. It defaults to `filteredData`.
 
 #### About filters
 
