@@ -1,36 +1,24 @@
 import { defaultsDeep, pick } from 'lodash';
-import { connect as defaultConnect } from 'react-redux';
 import actions from '../actions';
+import { compose } from '@bandwidth/redux-facet';
 
-export default selectors => (options) => {
-  const defaultedOptions = defaultsDeep(options, { connect: defaultConnect, dataPropName: 'filteredData' });
-
-  const mapStateToProps = (state, ownProps) => ({
-    filters: selectors.createFilterListSelector(ownProps.facetName)(state),
+export default (selectors, facet, withFacetData) => () => {
+  const mapFacetStateToProps = (state) => ({
+    filters: selectors.selectFilterListFromFacetState(state),
   });
 
-  const mapDispatchToProps = (dispatch, ownProps) => {
+  const mapFacetDispatchToProps = (facetDispatch) => {
     return {
-      addFilter: (filter) => ownProps.facetDispatch(actions.addFilter(filter)),
-      updateFilter: (index, filter) => ownProps.facetDispatch(actions.updateFilter(index, filter)),
-      insertFilter: (index, filter) => ownProps.facetDispatch(actions.insertFilter(index, filter)),
-      removeFilter: (index) => ownProps.facetDispatch(actions.removeFilter(index)),
-      clearFilters: () => ownProps.facetDispatch(actions.clearFilters()),
+      addFilter: (filter) => facetDispatch(actions.addFilter(filter)),
+      updateFilter: (index, filter) => facetDispatch(actions.updateFilter(index, filter)),
+      insertFilter: (index, filter) => facetDispatch(actions.insertFilter(index, filter)),
+      removeFilter: (index) => facetDispatch(actions.removeFilter(index)),
+      clearFilters: () => facetDispatch(actions.clearFilters()),
     };
   };
 
-  return defaultedOptions.connect(
-    mapStateToProps,
-    mapDispatchToProps,
-    null,
-    // pass through connect options from HOC options
-    pick(defaultedOptions, [
-      'pure',
-      'areStatesEqual',
-      'areOwnPropsEqual',
-      'areStatePropsEqual',
-      'areMergedPropsEqual',
-      'storeKey',
-    ]),
+  return compose(
+    facet(mapFacetDispatchToProps),
+    withFacetData(mapFacetStateToProps),
   );
 }

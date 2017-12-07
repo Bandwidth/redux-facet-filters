@@ -1,18 +1,4 @@
-import { createSelector } from 'reselect';
-import { selectors } from '@bandwidth/redux-facet/immutable';
-import { REDUCER_KEY } from '../constants';
+import createSelectors from '../factories/createSelectors';
+import { selectors } from '@bandwidth/redux-facet';
 
-const createFilterListSelector = facetName => createSelector(
-  selectors.createFacetStateSelector(facetName),
-  filters => facetState[REDUCER_KEY],
-);
-
-const createFilterSelectorCreator = index => facetName => createSelector(
-  createFilterCollectionSelector(facetName),
-  filters => filters[index],
-);
-
-export default {
-  createFilterListSelector,
-  createFilterSelectorCreator,
-};
+export default createSelectors(selectors);

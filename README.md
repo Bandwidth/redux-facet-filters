@@ -91,7 +91,7 @@ const filterReducer = (items, filter) => {
 Compose `withFilteredData` after `facet` before passing in your component:
 
 ```js
-facet('users', mapStateToProps, mapDispatchToProps)(
+facet('users')(
   withFilteredData(selectUsers, userFilterReducer)(
     ViewComponent
   )
@@ -102,7 +102,7 @@ To make things cleaner, it's recommended you use [`recompose`](https://github.co
 
 ```js
 compose(
-  facet('users', mapStateToProps, mapDispatchToProps),
+  facet('users'),
   withFilteredData(selectUsers, userFilterReducer)
 )(ViewComponent);
 ```
